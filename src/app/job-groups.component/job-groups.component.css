@@ -1,0 +1,153 @@
+.page-container {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  direction: rtl;
+}
+
+/* هدر صفحه */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.header-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-icon {
+  font-size: 32px;
+  width: 32px;
+  height: 32px;
+  color: #1976d2;
+}
+
+.header-title h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.add-btn {
+  border-radius: 8px !important;
+  font-weight: 600;
+  padding: 0 20px !important;
+  height: 44px !important;
+}
+
+/* کارت جدول */
+.table-card {
+  border-radius: 12px !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04) !important;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+}
+
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* هدر جدول */
+.custom-table th.mat-mdc-header-cell {
+  background-color: #f8fafc;
+  color: #475569;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 16px;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+/* سلول‌های جدول */
+.custom-table td.mat-mdc-cell {
+  padding: 14px 16px;
+  font-size: 14px;
+  color: #334155;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+/* ردیف‌های جدول */
+.table-row {
+  transition: background-color 0.2s ease;
+}
+
+.table-row:hover {
+  background-color: #f1f5f9 !important;
+}
+
+/* تایپوگرافی */
+.font-code {
+  font-weight: 600;
+  color: #64748b;
+}
+
+.font-title {
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.font-en {
+  color: #64748b;
+  direction: ltr;
+  text-align: right;
+}
+
+/* عملیات */
+.actions-header {
+  width: 150px;
+  text-align: center;
+}
+
+.actions-cell {
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* نشانگر تعداد شغل‌ها و دکمه مشاهده */
+.job-count-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.count-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: #e0f2fe;
+  color: #0369a1;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.view-jobs-btn {
+  width: 32px !important;
+  height: 32px !important;
+  line-height: 32px !important;
+}
+
+.view-jobs-btn mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+.default-badge {
+  display: inline-block;
+  margin-right: 8px;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  background-color: #dbeafe;
+  color: #2563eb;
+  font-weight: 600;
+}

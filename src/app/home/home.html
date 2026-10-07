@@ -1,0 +1,29 @@
+<div class="page">
+  <div class="header" dir="rtl">
+    <button class="buttn" (click)="toggleSide()">لطفا یک گزینه از منو رو انتخاب بکنید</button>
+  </div>
+  <div class="welcome-card">
+    @if (isGuest()) {
+      <h2>خوش آمدید، مهمان عزیز 👋</h2>
+      <p>شما به‌عنوان مهمان وارد شده‌اید و فقط امکان مشاهده‌ی اطلاعات را دارید.</p>
+    } @else {
+      <h2>خوش آمدید، {{ currentUser()?.name }} 👋</h2>
+      <p>نقش شما: {{ roleName() }}</p>
+    }
+  </div>
+
+  <div class="summary-card">
+    <mat-icon class="icongroup">group</mat-icon>
+    <div>
+      <span class="summary-number">{{ totalCount() }}</span>
+      <span class="summary-label">کاربر ثبت‌شده در سیستم</span>
+    </div>
+  </div>
+
+  <div class="shortcuts">
+    <button mat-raised-button color="primary" (click)="goToDashboard()" class="butn">
+      <mat-icon>dashboard</mat-icon>
+      صفحه مدیریت کاربران
+    </button>
+  </div>
+</div>

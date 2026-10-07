@@ -1,0 +1,90 @@
+<mat-sidenav-container class="layout" dir="rtl">
+  <mat-sidenav mode="side" [opened]="isSidenavOpen()" class="sidebar">
+    <mat-nav-list class="sidebar__list">
+      @for (item of visibleNavItems(); track item.label) {
+        @if (!item.children) {
+          <!-- آیتم‌های معمولی سایدبار -->
+          <a
+            mat-list-item
+            [routerLink]="item.path"
+            routerLinkActive="is-active"
+            class="sidebar__item"
+          >
+            <mat-icon matListItemIcon class="sidebar__icon" [style.color]="item.iconColor">
+              {{ item.icon }}
+            </mat-icon>
+            <span matListItemTitle class="sidebar__label">
+              {{ item.label }}
+            </span>
+          </a>
+        } @else {
+          <!-- آکاردئون زیرمنوی مدیریت شغل‌ها -->
+          <mat-expansion-panel class="sidebar__accordion" flat>
+            <mat-expansion-panel-header class="sidebar__accordion-header">
+              <mat-panel-title class="sidebar__accordion-title">
+                <mat-icon class="sidebar__icon" [style.color]="item.iconColor">
+                  {{ item.icon }}
+                </mat-icon>
+                <span class="sidebar__label">{{ item.label }}</span>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div class="sidebar__submenu">
+              @for (child of item.children; track child.path) {
+                <a
+                  mat-list-item
+                  [routerLink]="child.path"
+                  routerLinkActive="is-active-sub"
+                  class="sidebar__subitem"
+                >
+                  <mat-icon matListItemIcon class="sidebar__subicon">
+                    {{ child.icon }}
+                  </mat-icon>
+                  <span matListItemTitle class="sidebar__sublabel">
+                    {{ child.label }}
+                  </span>
+                </a>
+              }
+            </div>
+          </mat-expansion-panel>
+        }
+      }
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="content">
+    <mat-toolbar color="primary" class="header">
+      <div class="right-group">
+        <button mat-icon-button (click)="toggleSidenav()" class="menu-btn">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <span class="title">پنل مدیریت</span>
+      </div>
+
+      <div class="left-actions">
+        <div class="profile-card" (click)="goToProfile()">
+          <mat-icon class="profile-icon">account_circle</mat-icon>
+
+          @if (currentUser(); as user) {
+            <div class="profile-text">
+              <div class="name">{{ user.name }}</div>
+              <div class="sub">مشاهده پروفایل</div>
+            </div>
+          } @else {
+            <div class="profile-text">
+              <div class="sub">مهمان</div>
+            </div>
+          }
+        </div>
+
+        <button (click)="logout()" class="logout-btn">
+          <mat-icon>logout</mat-icon>
+        </button>
+      </div>
+    </mat-toolbar>
+
+    <div class="content__body">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

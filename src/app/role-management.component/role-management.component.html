@@ -1,0 +1,116 @@
+<!-- بخش آمار و نمودار مدیریت نقش‌ها -->
+<div class="role-analytics-grid">
+  <!-- کارت‌های آماری نقش‌ها -->
+  <div class="stat-cards-container">
+    <div class="stat-card">
+      <div class="stat-icon total"><mat-icon>admin_panel_settings</mat-icon></div>
+      <div class="stat-info">
+        <span class="stat-label">کل نقش‌های تعریف‌شده</span>
+        <span class="stat-value">{{ totalRoles() }}</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon system"><mat-icon>verified_user</mat-icon></div>
+      <div class="stat-info">
+        <span class="stat-label">نقش‌های سیستمی (پایه)</span>
+        <span class="stat-value">{{ systemRolesCount() }}</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon custom"><mat-icon>group_add</mat-icon></div>
+      <div class="stat-info">
+        <span class="stat-label">نقش‌های سفارشی</span>
+        <span class="stat-value">{{ customRolesCount() }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- کارت نمودار توزیع کاربران در هر نقش -->
+  <div class="chart-card">
+    <div class="chart-header">
+      <mat-icon>pie_chart</mat-icon>
+      <span>تراکم کاربران در نقش‌ها</span>
+    </div>
+    <div class="chart-container">
+      <canvas baseChart [data]="roleChartData()" [type]="roleChartType" [options]="chartOptions">
+      </canvas>
+    </div>
+  </div>
+</div>
+<div class="management-container rtl-dir">
+  <mat-card class="main-card">
+    <mat-card-header class="card-header">
+      <div class="header-titles">
+        <mat-card-title>مدیریت نقش‌ها</mat-card-title>
+        <mat-card-subtitle>تعریف، ویرایش و مدیریت نقش‌های دسترسی سیستم</mat-card-subtitle>
+      </div>
+      <button mat-raised-button color="primary" class="add-btn" (click)="openRoleDialog()">
+        <mat-icon>add</mat-icon>
+        افزودن نقش جدید
+      </button>
+    </mat-card-header>
+
+    <mat-card-content class="card-content">
+      <div class="table-container mat-elevation-z1">
+        <table mat-table [dataSource]="roles()" class="custom-table">
+          <!-- دکمه‌های عملیات -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef class="action-header">عملیات</th>
+            <td mat-cell *matCellDef="let role" class="action-cell">
+              <button
+                mat-icon-button
+                color="primary"
+                matTooltip="ویرایش نقش"
+                (click)="openRoleDialog(role)"
+              >
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" matTooltip="حذف نقش" (click)="deleteRole(role)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <!-- کد نقش -->
+          <ng-container matColumnDef="code">
+            <th mat-header-cell *matHeaderCellDef>کد نقش</th>
+            <td mat-cell *matCellDef="let role">
+              <span class="code-badge">{{ role.code }}</span>
+            </td>
+          </ng-container>
+
+          <!-- عنوان فارسی -->
+          <ng-container matColumnDef="nameFa">
+            <th mat-header-cell *matHeaderCellDef>عنوان فارسی</th>
+            <td mat-cell *matCellDef="let role" class="font-weight-bold">
+              {{ role.nameFa }}
+            </td>
+          </ng-container>
+
+          <!-- عنوان انگلیسی -->
+          <ng-container matColumnDef="nameEn">
+            <th mat-header-cell *matHeaderCellDef>عنوان انگلیسی</th>
+            <td mat-cell *matCellDef="let role" class="ltr-text">
+              {{ role.nameEn }}
+            </td>
+          </ng-container>
+
+          <!-- نوع نقش (پیش‌فرض/سفارشی) -->
+          <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef>نوع نقش</th>
+            <td mat-cell *matCellDef="let role">
+              <span [class]="role.isDefault ? 'status-badge system' : 'status-badge custom'">
+                {{ role.isDefault ? 'نقش اصلی' : 'سفارشی' }}
+              </span>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

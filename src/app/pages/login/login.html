@@ -1,0 +1,34 @@
+<div id="full" dir="rtl" class="container">
+  <div class="card">
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="form">
+      <mat-form-field appearance="outline" class="input">
+        <mat-label id="us">نام کاربری</mat-label>
+        <input matInput formControlName="username" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="input">
+        <mat-label id="pass">رمز عبور</mat-label>
+        <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" />
+        <button mat-icon-button matSuffix type="button" (click)="togglePasswordVisibility()">
+          <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" class="login-btn" type="submit">ورود</button>
+
+      @if (error) {
+        <p class="error">نام کاربری یا رمز عبور اشتباه است</p>
+      }
+    </form>
+  </div>
+
+  <div>
+    <button class="extra-actions" mat-stroked-button type="button" (click)="onGuestLogin()">
+      ورود به‌عنوان مهمان
+    </button>
+  </div>
+
+  <div>
+    <a mat-stroked-button routerLink="/register" id="sign">حساب کاربری ندارید؟ ثبت‌نام کنید</a>
+  </div>
+</div>

@@ -1,0 +1,104 @@
+<div class="page">
+  @if (currentUser(); as user) {
+    <div class="profile-card-main">
+      <div class="profile-header">
+        <mat-icon class="avatar">account_circle</mat-icon>
+        <div class="header-info">
+          <h2>{{ user.name || 'کاربر گرامی' }}</h2>
+          <p>{{ getJobTitle() || 'پروفایل کاربری' }}</p>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="label">نام و نام خانوادگی</div>
+          @if (editingField() === 'name') {
+            <input [(ngModel)]="tempValue" class="edit-input" />
+          } @else {
+            <div class="value">{{ user.name || '---' }}</div>
+          }
+        </div>
+
+        <div class="stat-card">
+          <div class="label">ایمیل</div>
+          @if (editingField() === 'email') {
+            <input [(ngModel)]="tempValue" class="edit-input" />
+          } @else {
+            <div class="value">{{ user.email || '---' }}</div>
+          }
+        </div>
+
+        <div class="stat-card">
+          <div class="label">شغل</div>
+          @if (editingField() === 'job') {
+            <mat-select [(value)]="tempValue">
+              @for (opt of jobOptions(); track opt.value) {
+                <mat-option [value]="opt.value">{{ opt.label }}</mat-option>
+              }
+            </mat-select>
+          } @else {
+            <div class="value">{{ getJobTitle() }}</div>
+          }
+        </div>
+
+        <div class="stat-card">
+          <div class="label">سن</div>
+          @if (editingField() === 'age') {
+            <input type="number" [(ngModel)]="tempValue" class="edit-input" />
+          } @else {
+            <div class="value">{{ user.age || '---' }}</div>
+          }
+        </div>
+
+        <div class="stat-card">
+          <div class="label">شماره تلفن</div>
+          @if (editingField() === 'phoneNumber') {
+            <input [(ngModel)]="tempValue" class="edit-input" />
+          } @else {
+            <div class="value">{{ user.phoneNumber || '---' }}</div>
+          }
+        </div>
+
+        <div class="stat-card">
+          <div class="label">تاریخ تولد</div>
+          @if (editingField() === 'birthday') {
+            <input [(ngModel)]="tempValue" class="edit-input" />
+          } @else {
+            <div class="value">{{ user.birthday || '---' }}</div>
+          }
+        </div>
+
+        <div class="stat-card">
+          <div class="label">رشته تحصیلی</div>
+          @if (editingField() === 'major') {
+            <input [(ngModel)]="tempValue" class="edit-input" />
+          } @else {
+            <div class="value">{{ user.major || '---' }}</div>
+          }
+        </div>
+
+        <div class="stat-card">
+          <div class="label">آدرس</div>
+          @if (editingField() === 'address') {
+            <input [(ngModel)]="tempValue" class="edit-input" />
+          } @else {
+            <div class="value">{{ user.address || '---' }}</div>
+          }
+        </div>
+      </div>
+
+      <div class="actions-wrapper">
+        <button class="actions-btn" mat-raised-button color="primary" (click)="openEdit()">
+          <mat-icon>edit</mat-icon>
+          <span>ویرایش کامل پروفایل</span>
+        </button>
+      </div>
+    </div>
+  } @else {
+    <div class="empty-state">
+      <mat-icon class="empty-icon">person_off</mat-icon>
+      <p>برای مشاهده و مدیریت اطلاعات پروفایل وارد حساب کاربری خود شوید.</p>
+      <a mat-raised-button color="primary" routerLink="/register" id="sign">ثبت‌نام / ورود</a>
+    </div>
+  }
+</div>

@@ -1,0 +1,74 @@
+<div class="register-container" dir="rtl">
+  <h2 class="title">ثبت‌نام</h2>
+
+  <form [formGroup]="registerForm" (ngSubmit)="onRegister()" class="form">
+    <mat-form-field appearance="outline" class="field">
+      <mat-label class="font">نام</mat-label>
+      <input matInput formControlName="name" />
+      @if (registerForm.get('name')?.invalid && registerForm.get('name')?.touched) {
+        <mat-error class="font">نام الزامی است</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="field">
+      <mat-label class="font">ایمیل</mat-label>
+      <input matInput type="email" formControlName="email" />
+      @if (registerForm.get('email')?.hasError('required') && registerForm.get('email')?.touched) {
+        <mat-error class="font">ایمیل را وارد کنید</mat-error>
+      }
+      @if (registerForm.get('email')?.hasError('email') && registerForm.get('email')?.touched) {
+        <mat-error class="font">فرمت ایمیل اشتباه است</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label class="font">شغل</mat-label>
+      <mat-select formControlName="job">
+        @for (opt of jobOptions; track opt.value) {
+          <mat-option [value]="opt.value">{{ opt.label }}</mat-option>
+        }
+      </mat-select>
+      @if (registerForm.get('job')?.invalid && registerForm.get('job')?.touched) {
+        <mat-error class="font">شغل الزامی است</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="field">
+      <mat-label class="font">سن</mat-label>
+      <input matInput type="number" formControlName="age" />
+      @if (registerForm.get('age')?.invalid && registerForm.get('age')?.touched) {
+        <mat-error class="font">سن الزامی است</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="field">
+      <mat-label class="font">نام کاربری</mat-label>
+      <input matInput formControlName="username" />
+
+      @if (registerForm.get('username')?.invalid && registerForm.get('username')?.touched) {
+        <mat-error class="font">نام کاربری الزامی است</mat-error>
+      }
+
+      @if (usernameTakenError) {
+        <mat-error class="font">این نام کاربری قبلاً استفاده شده است</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="field">
+      <mat-label class="font">رمز عبور</mat-label>
+      <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" />
+
+      <button mat-icon-button matSuffix type="button" (click)="togglePasswordVisibility()">
+        <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+      </button>
+
+      @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
+        <mat-error class="font">رمز عبور الزامی است</mat-error>
+      }
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" class="btn" type="submit">ثبت‌نام</button>
+
+    <a mat-raised-button routerLink="/login" class="link">حساب کاربری دارید؟ وارد شوید</a>
+  </form>
+</div>

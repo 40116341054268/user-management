@@ -1,0 +1,245 @@
+<!-- بخش آمار و نمودارهای بالای داشبورد -->
+<div class="dashboard-analytics-grid">
+  <!-- کارت‌های آماری عددی -->
+  <div class="stat-cards-container">
+    <div class="stat-card total" (click)="toggleStat('total')">
+      <div class="stat-icon"><mat-icon>people</mat-icon></div>
+      <div class="stat-info">
+        <span class="stat-label">کل کاربران</span>
+        <span class="stat-value">{{ totalCount() }}</span>
+      </div>
+    </div>
+
+    <div class="stat-card admin" (click)="toggleStat('admin')">
+      <div class="stat-icon"><mat-icon>admin_panel_settings</mat-icon></div>
+      <div class="stat-info">
+        <span class="stat-label">مدیران</span>
+        <span class="stat-value">{{ adminCount() }} ({{ adminPercent() }}%)</span>
+      </div>
+    </div>
+
+    <div class="stat-card user" (click)="toggleStat('user')">
+      <div class="stat-icon"><mat-icon>person</mat-icon></div>
+      <div class="stat-info">
+        <span class="stat-label">کاربران عادی</span>
+        <span class="stat-value">{{ userCount() }} ({{ userPercent() }}%)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- کارت نمودار دایره‌ای -->
+  <div class="chart-card">
+    <div class="chart-header">
+      <mat-icon>pie_chart</mat-icon>
+      <span>توزیع نقش‌های کاربران</span>
+    </div>
+    <div class="chart-container">
+      <canvas
+        baseChart
+        [data]="roleChartData()"
+        [type]="doughnutChartType"
+        [options]="chartOptions"
+      >
+      </canvas>
+    </div>
+  </div>
+</div>
+<div class="users-page" dir="rtl">
+  <div class="header-actions">
+    <h3 class="list-title">لیست کاربران</h3>
+  </div>
+
+  <div class="search-row">
+    @if (isAdmin()) {
+      <button (click)="openAddUser()" class="btn">افزودن کاربر</button>
+    }
+    <div class="search-box">
+      <input
+        matInput
+        #searchInput
+        placeholder="جستجو...(بر اساس نام کاربری  )"
+        (keyup.enter)="performSearch(searchInput.value)"
+      />
+
+      <button mat-icon-button (click)="performSearch(searchInput.value)">
+        <mat-icon>search</mat-icon>
+      </button>
+
+      <button mat-icon-button (click)="clearSearch(searchInput)">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <button mat-stroked-button class="sort-btn">
+      مرتب‌سازی
+      <mat-icon class="iconso">sort</mat-icon>
+      <mat-select class="sort-select" (selectionChange)="setSort($event.value)">
+        <mat-option value="none">بدون</mat-option>
+        <mat-option value="age">سن</mat-option>
+        <mat-option value="name">نام</mat-option>
+        <mat-option value="joinDate">تاریخ</mat-option>
+      </mat-select>
+    </button>
+    <div class="filter-card">
+      <div class="filter-bar">
+        <!-- سمت راست: دکمه آیکون فیلتر (و عنوان اختیاری) -->
+        <div class="filter-trigger-section">
+          <button
+            mat-icon-button
+            (click)="toggleFilterPanel()"
+            class="filter-trigger-btn"
+            [class.active-filter]="roleFilter() !== 'all' || jobFilter() !== 'all'"
+            [class.panel-open]="showFilterPanel()"
+          >
+            <mat-icon>filter_list</mat-icon>
+          </button>
+
+          <!-- دکمه پاک‌سازی فیلترها (در صورت فعال بودن) -->
+          @if (roleFilter() !== 'all' || jobFilter() !== 'all') {
+            <button mat-button color="warn" (click)="resetFilters()" class="reset-btn">
+              <mat-icon>refresh</mat-icon>
+              ریست
+            </button>
+          }
+        </div>
+
+        <!-- سمت چپ/ادامه خط: فیلدهای فیلتر (کنار دکمه باز می‌شوند) -->
+        @if (showFilterPanel()) {
+          <div class="filter-fields-inline">
+            @if (isAdmin()) {
+              <mat-form-field appearance="outline" class="filter-field">
+                <mat-label>نقش</mat-label>
+                <mat-select [value]="roleFilter()" (selectionChange)="setRoleFilter($event.value)">
+                  <mat-option value="all">همه</mat-option>
+                  @for (r of roleList(); track r.id) {
+                    <mat-option [value]="r.id">{{ r.nameFa }}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+            }
+
+            <mat-form-field appearance="outline" class="filter-field">
+              <mat-label>شغل</mat-label>
+              <mat-select [value]="jobFilter()" (selectionChange)="setJobFilter($event.value)">
+                <mat-option value="all">همه</mat-option>
+                @for (j of jobs(); track j.id) {
+                  <mat-option [value]="j.code">{{ j.titleFa || j.titleEn }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+  @if (isGuest()) {
+    <div class="guest-banner">شما به‌عنوان مهمان وارد شده‌اید و فقط امکان مشاهده دارید.</div>
+  }
+
+  <div class="table-wrapper">
+    <table mat-table [dataSource]="pagedUsers()" class="users-table mat-elevation-z2">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>نام</th>
+        <td mat-cell *matCellDef="let user">{{ user.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>ایمیل</th>
+        <td mat-cell *matCellDef="let user">{{ user.email }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="job">
+        <th mat-header-cell *matHeaderCellDef>شغل</th>
+        <td mat-cell *matCellDef="let user">
+          {{ getJobInfoText(user.job) }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="age">
+        <th mat-header-cell *matHeaderCellDef>سن</th>
+        <td mat-cell *matCellDef="let user">{{ user.age }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="joinDate">
+        <th mat-header-cell *matHeaderCellDef>تاریخ عضویت</th>
+        <td mat-cell *matCellDef="let user">{{ formatDate(user.joinDate) }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="username">
+        <th mat-header-cell *matHeaderCellDef>نام کاربری</th>
+        <td
+          mat-cell
+          *matCellDef="let user"
+          [innerHTML]="user.username | highlight: searchTerm()"
+        ></td>
+      </ng-container>
+
+      <ng-container matColumnDef="role">
+        <th mat-header-cell *matHeaderCellDef>نقش</th>
+        <td mat-cell *matCellDef="let user">{{ roleLabel(user.role) }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="extra">
+        <th mat-header-cell *matHeaderCellDef>اطلاعات اضافی</th>
+        <td mat-cell *matCellDef="let user">
+          @if (user.address || user.extraFields?.address || user.extraFields?.children !== null) {
+            <div>
+              @if (user.address || user.extraFields?.address) {
+                آدرس: {{ user.address || user.extraFields?.address }}
+              }
+            </div>
+            <div>
+              @if (
+                user.extraFields?.children !== null && user.extraFields?.children !== undefined
+              ) {
+                تعداد فرزند: {{ user.extraFields.children }}
+              }
+            </div>
+          }
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>عملیات</th>
+        <td mat-cell *matCellDef="let user">
+          <button
+            mat-icon-button
+            color="primary"
+            [disabled]="!canEdit(user)"
+            (click)="openEditDialog(user)"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            color="warn"
+            [disabled]="!canDelete(user)"
+            (click)="deleteUser(user)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button mat-icon-button (click)="openJobDialog(user)" [disabled]="!canEdit(user)">
+            <mat-icon>work</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns()"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns()"></tr>
+    </table>
+    <div *ngIf="totalFiltered() === 0" class="empty-state">
+      <mat-icon class="empty-icon">search_off</mat-icon>
+      <h3>هیچ کاربری با این مشخصات یافت نشد!</h3>
+      <p>لطفاً متن جستجو یا فیلترهای انتخاب‌شده را تغییر دهید.</p>
+      <button mat-stroked-button color="primary" (click)="resetFilters()">پاک‌سازی فیلترها</button>
+    </div>
+  </div>
+  <mat-paginator
+    [length]="totalFiltered()"
+    [pageSize]="pageSize()"
+    [pageIndex]="currentPage()"
+    [pageSizeOptions]="[1, 5, 10, 25]"
+    (page)="onPageChange($event)"
+    showFirstLastButtons
+  ></mat-paginator>
+</div>

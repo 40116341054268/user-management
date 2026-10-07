@@ -1,1 +1,26 @@
-/* You can add global styles to this file, and also import other style files */
+@font-face {
+  font-family: 'vazir';
+  src: url(../Vazir.woff);
+}
+.custom-backdrop {
+  background-color: rgba(0, 0, 0, 0.712);
+}
+.active-link {
+  background-color: rgba(0, 0, 0, 0.08);
+  font-weight: bold;
+}
+.custom-snackbar {
+  background-color: #323232;
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 10px;
+  margin: auto;
+  padding: 8px;
+  direction: rtl;
+  font-family: 'vazir';
+}
+.custom-dialog .mat-mdc-dialog-surface {
+  padding: 0 !important;
+  border-radius: 16px;
+}

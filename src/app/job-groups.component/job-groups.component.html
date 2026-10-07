@@ -1,0 +1,89 @@
+<div class="page-container">
+  <!-- هدر صفحه -->
+  <div class="page-header">
+    <div class="header-title">
+      <mat-icon class="header-icon">folder_special</mat-icon>
+      <h2>مدیریت گروه‌های شغلی</h2>
+    </div>
+    <button mat-raised-button color="primary" class="add-btn" (click)="openGroupDialog()">
+      <mat-icon>add</mat-icon>
+      افزودن گروه جدید
+    </button>
+  </div>
+
+  <!-- جدول داده‌ها -->
+  <mat-card class="table-card">
+    <table mat-table [dataSource]="jobService.jobGroups()" class="custom-table">
+      <!-- عملیات -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef class="actions-header">عملیات</th>
+        <td mat-cell *matCellDef="let group" class="actions-cell">
+          <button
+            mat-icon-button
+            color="primary"
+            matTooltip="ویرایش گروه"
+            [disabled]="group.isDefault"
+            (click)="openGroupDialog(group)"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+
+          <button
+            mat-icon-button
+            color="warn"
+            matTooltip="حذف گروه"
+            [disabled]="group.isDefault"
+            (click)="deleteJobGroup(group)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <!-- کد گروه -->
+      <ng-container matColumnDef="code">
+        <th mat-header-cell *matHeaderCellDef>کد گروه</th>
+        <td mat-cell *matCellDef="let group" class="font-code">{{ group.code }}</td>
+      </ng-container>
+
+      <!-- عنوان فارسی -->
+      <ng-container matColumnDef="nameFa">
+        <th mat-header-cell *matHeaderCellDef>عنوان فارسی</th>
+        <td mat-cell *matCellDef="let group" class="font-title">
+          {{ group.nameFa }}
+          @if (group.isDefault) {
+            <span class="default-badge">اصلی</span>
+          }
+        </td>
+      </ng-container>
+
+      <!-- عنوان انگلیسی -->
+      <ng-container matColumnDef="nameEn">
+        <th mat-header-cell *matHeaderCellDef>عنوان انگلیسی</th>
+        <td mat-cell *matCellDef="let group" class="font-en">{{ group.nameEn }}</td>
+      </ng-container>
+
+      <!-- تعداد شغل‌های زیرمجموعه + دکمه مشاهده -->
+      <ng-container matColumnDef="jobCount">
+        <th mat-header-cell *matHeaderCellDef>تعداد شغل‌ها</th>
+        <td mat-cell *matCellDef="let group">
+          <div class="job-count-wrapper">
+            <span class="count-badge">{{ getJobCountForGroup(group.id) }}</span>
+            <button
+              mat-icon-button
+              color="accent"
+              class="view-jobs-btn"
+              matTooltip="مشاهده شغل‌های این گروه"
+              (click)="viewGroupJobs(group)"
+            >
+              <mat-icon>visibility</mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns" class="table-row"></tr>
+    </table>
+  </mat-card>
+</div>

@@ -1,0 +1,46 @@
+<!-- <div class="job-dialog">
+  <h2 class="title">انتخاب شغل</h2>
+
+  <div class="search-box">
+    <input
+      matInput
+      #searchInput
+      placeholder="جستجو...(بر اساس نام شغل)"
+      (keyup.enter)="performSearch(searchInput.value)"
+    />
+
+    <button mat-icon-button (click)="performSearch(searchInput.value)" class="btn">
+      <mat-icon>search</mat-icon>
+    </button>
+
+    <button mat-icon-button (click)="clearSearch(searchInput)" class="btn">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="job-list">
+    @for (job of filteredJobs(); track job) {
+      <div class="job-item" [class.active]="selectedJob === job" (click)="select(job)">
+        <span class="job-name">{{ job }}</span>
+
+        @if (selectedJob === job) {
+          <span class="check">✔</span>
+        }
+      </div>
+    }
+  </div>
+
+  <div class="actions">
+    <button mat-stroked-button (click)="cancel()" class="act">بستن</button>
+
+    <button
+      mat-raised-button
+      color="primary"
+      class="act"
+      (click)="save()"
+      [disabled]="!selectedJob"
+    >
+      ذخیره
+    </button>
+  </div>
+</div> -->

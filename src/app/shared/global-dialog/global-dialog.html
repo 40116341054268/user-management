@@ -1,0 +1,206 @@
+<div class="dialog-window" dir="rtl">
+  <!-- ۱. هدر -->
+  <div class="dialog-titlebar">
+    <span class="dialog-title-text">{{ data.title }}</span>
+    <button mat-icon-button class="dialog-close-btn" (click)="onCancel()" type="button">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <!-- ۲. حالت Confirm -->
+  @if (data.type === 'confirm') {
+    <div class="dialog-body confirm-body">
+      <p class="confirm-message">{{ data.message }}</p>
+    </div>
+
+    <div mat-dialog-actions align="end">
+      <button mat-button type="button" (click)="onCancel()">
+        {{ data.cancelButtonText || 'خیر' }}
+      </button>
+      <button
+        mat-raised-button
+        [color]="data.confirmColor || 'warn'"
+        type="button"
+        (click)="onSubmit()"
+      >
+        {{ data.submitButtonText || 'بله' }}
+      </button>
+    </div>
+  }
+
+  <!-- ۳. فرم + پروفایل -->
+  @if ((data.type === 'form' || data.type === 'profile') && data.fields) {
+    <!-- هدر پروفایل -->
+    @if (data.type === 'profile') {
+      <div class="profile-avatar-banner">
+        <div class="avatar-circle">
+          @if (data.avatarUrl) {
+            <img [src]="data.avatarUrl" class="avatar-img" />
+          } @else {
+            <mat-icon class="avatar-icon">account_circle</mat-icon>
+          }
+        </div>
+        <div class="profile-banner-info">
+          <span class="profile-role-badge">{{ data.userRole || 'پروفایل کاربری' }}</span>
+        </div>
+      </div>
+    }
+
+    <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+      <div class="form-grid">
+        @for (field of data.fields; track field.key) {
+          <div
+            class="field-item"
+            [style.grid-column]="field.gridSpan ? 'span ' + field.gridSpan : 'span 1'"
+          >
+            <!-- TEXT / NUMBER / EMAIL -->
+            @if (field.type === 'text' || field.type === 'number' || field.type === 'email') {
+              <mat-form-field appearance="outline" class="compact-field full-width">
+                <mat-label>{{ field.label }}</mat-label>
+                <input
+                  matInput
+                  [type]="field.type"
+                  [formControlName]="field.key"
+                  [placeholder]="field.placeholder || ''"
+                />
+                @if (formGroup.get(field.key)?.touched && formGroup.get(field.key)?.invalid) {
+                  <mat-error>
+                    {{
+                      formGroup.get(field.key)?.errors?.['customError'] ||
+                        field.label + ' معتبر نیست'
+                    }}
+                  </mat-error>
+                }
+              </mat-form-field>
+            }
+
+            <!-- PASSWORD -->
+            @if (field.type === 'password') {
+              <mat-form-field appearance="outline" class="compact-field full-width">
+                <mat-label>{{ field.label }}</mat-label>
+                <input
+                  matInput
+                  [type]="hidePasswordMap[field.key] ? 'password' : 'text'"
+                  [formControlName]="field.key"
+                />
+                <button mat-icon-button matSuffix type="button" (click)="togglePassword(field.key)">
+                  <mat-icon>
+                    {{ hidePasswordMap[field.key] ? 'visibility_off' : 'visibility' }}
+                  </mat-icon>
+                </button>
+              </mat-form-field>
+            }
+
+            <!-- SELECT -->
+            @if (field.type === 'select') {
+              <mat-form-field appearance="outline" class="compact-field full-width">
+                <mat-label>{{ field.label }}</mat-label>
+                <mat-select
+                  [formControlName]="field.key"
+                  (selectionChange)="onSelectChange(field, $event.value)"
+                >
+                  <!-- گزینه‌ها -->
+                  @for (opt of field.options; track getOptionValue(opt)) {
+                    <mat-option [value]="getOptionValue(opt)">
+                      {{ getOptionLabel(opt) }}
+                    </mat-option>
+                  }
+
+                  <!-- ADD NEW -->
+                  @if (field.allowAddNew) {
+                    <mat-option value="__add_new__" class="add-new-option">
+                      <mat-icon>add</mat-icon>
+                      <span>{{ field.addNewLabel || 'افزودن گزینه جدید' }}</span>
+                    </mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+
+              <!-- input افزودن -->
+              @if (addingNewOptionFieldKey() === field.key) {
+                <div class="add-new-row">
+                  <mat-form-field appearance="outline" class="compact-field full-width">
+                    <mat-label>نام جدید</mat-label>
+                    <input matInput [formControl]="newItemControl" />
+                  </mat-form-field>
+
+                  <button mat-icon-button color="primary" (click)="confirmAddNewOption(field)">
+                    <mat-icon>check</mat-icon>
+                  </button>
+
+                  <button mat-icon-button (click)="cancelAddNewOption()">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                </div>
+              }
+            }
+
+            <!-- DATE -->
+            @if (field.type === 'date') {
+              <mat-form-field appearance="outline" class="compact-field full-width">
+                <mat-label>{{ field.label }}</mat-label>
+                <input matInput [matDatepicker]="picker" [formControlName]="field.key" />
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+            }
+          </div>
+        }
+      </div>
+
+      <div mat-dialog-actions align="end">
+        <button mat-button type="button" (click)="onCancel()">
+          {{ data.cancelButtonText || 'انصراف' }}
+        </button>
+        <button mat-raised-button color="primary" type="submit">
+          {{ data.submitButtonText || 'ذخیره' }}
+        </button>
+      </div>
+    </form>
+  }
+
+  <!-- ۴. Selection List -->
+  @if (data.type === 'selection-list') {
+    <div class="dialog-body">
+      <mat-form-field appearance="outline" class="full-width compact-field">
+        <mat-label>{{ data.searchPlaceholder || 'جستجو...' }}</mat-label>
+        <input
+          matInput
+          [value]="searchTerm()"
+          (input)="searchTerm.set($any($event.target).value)"
+        />
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+
+      <div class="selection-list">
+        @for (item of filteredList(); track getOptionValue(item)) {
+          <div
+            class="selection-item"
+            [class.active]="selectedListItem() === getOptionValue(item)"
+            (click)="selectListItem(getOptionValue(item))"
+          >
+            <span>{{ getOptionLabel(item) }}</span>
+
+            @if (selectedListItem() === getOptionValue(item)) {
+              <mat-icon class="check-icon">check_circle</mat-icon>
+            }
+          </div>
+        }
+      </div>
+    </div>
+
+    <div mat-dialog-actions align="end">
+      <button mat-button type="button" (click)="onCancel()">بستن</button>
+
+      <button
+        mat-raised-button
+        color="primary"
+        type="button"
+        [disabled]="!selectedListItem()"
+        (click)="onSubmit()"
+      >
+        انتخاب
+      </button>
+    </div>
+  }
+</div>

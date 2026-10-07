@@ -1,0 +1,103 @@
+.btn {
+  margin: 0 1px;
+  font-family: 'vazir';
+}
+
+p {
+  margin: 0 1px;
+  font-family: 'vazir';
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'vazir';
+  padding: 5px;
+  background-color: #d3d7e7;
+  border-radius: 20px;
+}
+.welcome-card {
+  background-color: #d3d7e7;
+  margin-top: 10px;
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 16px;
+}
+
+.welcome-card h2 {
+  margin: 0 0 8px 0;
+  font-family: 'vazir';
+}
+
+.welcome-card p {
+  color: #555;
+}
+
+.summary-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: #f5f5f5;
+  border-radius: 8px;
+  padding: 16px 24px;
+  margin-bottom: 24px;
+  width: fit-content;
+}
+
+.summary-card mat-icon {
+  font-size: 40px;
+  width: 40px;
+  height: 40px;
+  color: #3a81c7;
+  margin: auto;
+}
+.summary-card {
+  margin: auto;
+  border-radius: 1rem 2rem;
+}
+.summary-number {
+  display: block;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.summary-label {
+  color: #666;
+  font-family: 'vazir';
+  font-size: 14px;
+}
+
+.shortcuts {
+  padding-top: 10px;
+  display: flex;
+  gap: 12px;
+}
+
+.shortcuts button {
+  gap: 3px;
+  margin: auto;
+  font-family: 'vazir';
+}
+.butn:hover {
+  color: rgb(255, 145, 0);
+  font-weight: bold;
+  border: 2px solid rgba(18, 134, 180, 0.568);
+}
+.page {
+  padding: 20px;
+  background-color: #d3d7e7;
+  min-height: 100vh;
+  font-family: 'vazir';
+  text-align: center;
+}
+.buttn {
+  background: none;
+  border: none;
+  color: black;
+  font-family: 'vazir';
+}
+.buttn:hover {
+  color: rgb(9, 9, 163);
+  text-shadow: 1px 1px 10px black;
+}

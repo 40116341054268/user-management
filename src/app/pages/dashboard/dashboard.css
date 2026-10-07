@@ -1,0 +1,633 @@
+@font-face {
+  font-family: 'vazir';
+  src: url(../../../../Vazir.woff);
+}
+.users-page {
+  padding: 20px;
+  direction: rtl;
+  background-color: #d3d7e7;
+  border-radius: 2rem;
+  min-height: 100vh;
+  font-family: 'vazir';
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  font-family: 'vazir';
+}
+
+.title {
+  margin: 0;
+  font-family: 'vazir';
+  color: rgb(0, 0, 0);
+}
+
+.header-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  font-family: 'vazir';
+}
+
+.list-title {
+  margin: 0;
+  font-family: 'vazir';
+}
+
+.add-user-btn {
+  width: auto;
+  padding: 0 20px;
+  cursor: pointer;
+  background: #ffffff;
+}
+
+.guest-banner {
+  background: #fff3cd;
+  color: #856404;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  font-family: 'vazir';
+}
+
+.table-wrapper {
+  background: rgb(255, 255, 255);
+  border-radius: 25px;
+  padding: 10px;
+  overflow-x: auto;
+  color: black;
+  font-family: 'vazir';
+}
+
+.users-table {
+  width: 100%;
+  font-family: 'vazir';
+}
+
+.btn {
+  font-family: 'vazir';
+  color: #000000;
+  background: #d3d7e7;
+  border: none;
+  width: 80px;
+  height: 40px;
+  border-radius: 20px;
+}
+.btn:hover {
+  background-color: #b5bee2;
+  box-shadow: 1px 1px 6px 1px rgba(51, 80, 97, 0.815);
+}
+
+tr {
+  font-family: 'vazir';
+}
+
+.stat-card {
+  background: #1b0b0b;
+  border-radius: 8px;
+  padding: 16px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 140px;
+  text-align: center;
+  margin: auto;
+}
+
+.stat-number {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.stat-label {
+  color: #666;
+  margin-top: 4px;
+  text-align: center;
+}
+.search-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.search-field {
+  width: 100%;
+  max-width: 400px;
+  font-family: 'vazir';
+}
+
+.iconS {
+  margin-left: 5px;
+  color: #3c7a09;
+}
+
+.label {
+  font-family: 'vazir';
+}
+.iconC {
+  color: red;
+}
+.select {
+  font-family: 'vazir';
+}
+.jobs-panel {
+  background: #f5f5f5;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.jobs-add-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.jobs-input {
+  width: 250px;
+}
+
+.jobs-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.job-chip {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 16px;
+  padding: 4px 8px 4px 4px;
+}
+
+.mat-column-job {
+  min-width: 150px;
+}
+.mat-mdc-row {
+  height: auto;
+}
+.mat-mdc-cell {
+  padding-block: 10px;
+}
+.btn-close-toggle {
+  color: #1b0b0b;
+  background: #ffffff;
+  border-radius: 20px 10px;
+}
+.btn-close-toggle:hover {
+  background-color: rgb(136, 200, 255);
+  color: white;
+  border-radius: 20px 10px;
+}
+.BTN {
+  font-family: 'vazir';
+  font-weight: 900;
+  margin-right: 10px;
+  direction: ltr;
+  gap: 8px;
+  border-radius: 90px 50px;
+}
+.search-row {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+
+  background: #fff;
+  padding: 10px 12px;
+  border-radius: 12px;
+
+  margin-bottom: 12px;
+}
+
+/* باکس سرچ */
+.search-box {
+  display: flex;
+  align-items: center;
+
+  background: #d3d7e7;
+  border-radius: 10px;
+
+  padding: 8px;
+  gap: 4px;
+
+  min-width: 240px;
+}
+
+/* input */
+.search-box input {
+  border: none;
+  outline: none;
+  flex: 1;
+  font-size: 12px;
+  font-family: 'vazir';
+}
+
+/* دکمه‌ها */
+.search-box button {
+  width: 32px;
+  height: 32px;
+  color: #000000;
+}
+
+/* سورت */
+.sort-btn {
+  display: flex;
+  align-items: center;
+  background: #d3d7e7;
+  font-size: 13px;
+  border-radius: 10px;
+  padding: 1px 10px;
+  color: #000000;
+}
+
+/* select داخل دکمه */
+.sort-select {
+  width: 90px;
+}
+.iconsort {
+  color: #000000;
+}
+/* /////////////////// */
+.stats-grid {
+  display: flex;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.stat-cardd {
+  background-color: #bac7f5d2;
+  border-radius: 1rem;
+  padding: 16px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 170px;
+  min-width: 150px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  align-items: center;
+  margin: auto;
+}
+
+.stat-cardd:hover {
+  font-weight: 600;
+
+  .stat-labell {
+    background-color: #050505;
+    color: aliceblue;
+    font-weight: bold;
+  }
+}
+
+.stat-numberr {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.stat-labell {
+  color: #050505;
+  margin-top: 4px;
+  text-align: center;
+  background: rgb(255, 255, 255);
+  border-radius: 25px;
+  padding: 5px;
+  overflow-x: auto;
+  color: black;
+
+  font-family: 'vazir';
+}
+
+.pagee {
+  padding: 20px;
+  background-color: #d3d7e7;
+  font-family: 'vazir';
+  text-align: center;
+  border-radius: 2rem;
+  margin-bottom: 10px;
+}
+.table-wrapperr {
+  background: rgb(255, 255, 255);
+  border-radius: 25px;
+  padding: 10px;
+  overflow-x: auto;
+  color: black;
+  font-family: 'vazir';
+  margin-top: 10px;
+}
+.font {
+  font-family: 'vazir';
+}
+@media (max-width: 768px) {
+  .stats-grid {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .stat-cardd {
+    width: 45%; /* دو تا کنار هم */
+    min-width: 140px;
+  }
+}
+
+@media (max-width: 480px) {
+  .stat-cardd {
+    width: 100%; /* تک ستونه */
+  }
+}
+.filter-field {
+  width: 160px;
+  font-family: 'vazir';
+}
+.filter-field ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+  display: none;
+}
+.search-row {
+  flex-wrap: wrap;
+}
+/* //////////////// */
+
+mat-paginator {
+  direction: rtl;
+  margin-top: 18px;
+  border-radius: 14px;
+  overflow: hidden;
+
+  background: #fff;
+  border: 1px solid #b6b3b3;
+  font-family: 'vazir';
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+}
+
+::ng-deep .mat-mdc-paginator-container {
+  min-height: 58px;
+  padding: 0 18px;
+}
+
+::ng-deep .mat-mdc-paginator-range-label {
+  font-size: 13px;
+  color: #666;
+  margin: 0 20px;
+}
+
+::ng-deep .mat-mdc-paginator-page-size-label {
+  font-size: 13px;
+  color: #555;
+}
+::ng-deep .mat-mdc-paginator-page-size-label:hover {
+  color: #000000;
+}
+::ng-deep .mat-mdc-paginator-page-size-select {
+  width: 70px;
+}
+
+::ng-deep .mat-mdc-paginator-navigation-previous,
+::ng-deep .mat-mdc-paginator-navigation-next,
+::ng-deep .mat-mdc-paginator-navigation-first,
+::ng-deep .mat-mdc-paginator-navigation-last {
+  border-radius: 9px;
+  margin: 0 2px;
+  transition: background-color 0.2s ease;
+}
+
+::ng-deep .mat-mdc-paginator-navigation-previous:hover:not([disabled]),
+::ng-deep .mat-mdc-paginator-navigation-next:hover:not([disabled]),
+::ng-deep .mat-mdc-paginator-navigation-first:hover:not([disabled]),
+::ng-deep .mat-mdc-paginator-navigation-last:hover:not([disabled]) {
+  background-color: #f3f4f6;
+}
+/* کارت اصلی فیلتر */
+.filter-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 10px 16px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+/* نوار افقی اصلی */
+.filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap; /* برای حمایت از حالت مانیتورهای کوچک و موبایل */
+}
+
+/* بخش دکمه فیلتر و دکمه ریست */
+.filter-trigger-section {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0; /* جلوگیری از جمع شدن دکمه */
+}
+
+/* دکمه آیکون فیلتر */
+.filter-trigger-btn {
+  background-color: #f1f5f9;
+  color: #475569;
+  transition: all 0.25s ease;
+}
+
+.filter-trigger-btn:hover {
+  background-color: #e2e8f0;
+  color: #0f172a;
+}
+
+.filter-trigger-btn.active-filter {
+  background-color: #e0e7ff;
+  color: #4f46e5;
+}
+
+.filter-trigger-btn.panel-open {
+  background-color: #4f46e5;
+  color: #ffffff;
+}
+
+/* کانتینر فیلدها که دقیقا کنار دکمه باز می‌شود */
+.filter-fields-inline {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-grow: 1;
+  animation: slideRight 0.25s ease-in-out;
+}
+
+/* انیمیشن باز شدن روان از سمت دکمه */
+@keyframes slideRight {
+  from {
+    opacity: 0;
+    transform: translateX(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* تنظیم عرض فیلدها تا زیاد پهن نشوند */
+.filter-field {
+  min-width: 160px;
+  max-width: 220px;
+}
+
+/* حذف فضای خالی اضافه زیر fied متریال */
+.filter-field .mat-mdc-form-field-subscript-wrapper {
+  display: none !important;
+}
+
+/* برای نمایش مناسب در موبایل */
+@media (max-width: 600px) {
+  .filter-fields-inline {
+    width: 100%;
+    flex-direction: column;
+  }
+  .filter-field {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+/* استایل Empty State */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+  color: #666;
+}
+
+.empty-icon {
+  font-size: 64px;
+  width: 64px;
+  height: 64px;
+  margin-bottom: 16px;
+  color: #ccc;
+}
+
+/* استایل هایلایت متن جستجو */
+::ng-deep .search-highlight {
+  background-color: #ffe082;
+  color: #000;
+  border-radius: 2px;
+  padding: 0 2px;
+}
+/* شبکه‌بندی بخش آمار و نمودار */
+.dashboard-analytics-grid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+/* کارت‌های عددی سمت راست */
+.stat-cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.stat-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid #e2e8f0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.stat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.stat-card.total .stat-icon {
+  background: #e0e7ff;
+  color: #4f46e5;
+}
+.stat-card.admin .stat-icon {
+  background: #e0e7ff;
+  color: #4f46e5;
+}
+.stat-card.user .stat-icon {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+.stat-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.stat-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+/* کارت نمودار سمت چپ */
+.chart-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 16px;
+  border: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+}
+
+.chart-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 12px;
+}
+
+.chart-header mat-icon {
+  color: #6366f1;
+  font-size: 20px;
+}
+
+.chart-container {
+  position: relative;
+  height: 180px;
+  width: 100%;
+}
+
+/* برای نمایش مناسب در گوشی موبایل */
+@media (max-width: 900px) {
+  .dashboard-analytics-grid {
+    grid-template-columns: 1fr;
+  }
+}
